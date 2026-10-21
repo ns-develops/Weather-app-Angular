@@ -1,0 +1,16 @@
+<section>
+  <h3>7-dagarsprognos</h3>
+  <ol class="days">
+    @for (day of days(); track day.date; let first = $first) {
+      <li>
+        <span class="day">{{ first ? 'Idag' : (day.date | date: 'EEE d/M') }}</span>
+        <span class="icon" [title]="weatherText(day.weatherCode)">{{ weatherIcon(day.weatherCode) }}</span>
+        <span class="rain" title="Risk för nederbörd">💧 {{ day.precipitationProbability ?? 0 }} %</span>
+        <span class="temps">
+          <strong>{{ day.tempMax | number: '1.0-0' }}°</strong>
+          <span>{{ day.tempMin | number: '1.0-0' }}°</span>
+        </span>
+      </li>
+    }
+  </ol>
+</section>

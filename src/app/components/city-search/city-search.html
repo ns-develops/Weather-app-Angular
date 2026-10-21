@@ -1,0 +1,34 @@
+<div class="search">
+  <input
+    type="search"
+    placeholder="Sök stad, t.ex. Göteborg"
+    aria-label="Sök stad"
+    autocomplete="off"
+    [ngModel]="query()"
+    (ngModelChange)="onInput($event)"
+    (keydown.enter)="selectFirst()"
+    (focus)="open.set(true)"
+    (blur)="close()"
+  />
+
+  @if (open() && query().trim().length >= 2) {
+    <ul class="results" role="listbox">
+      @if (loading()) {
+        <li class="hint">Söker…</li>
+      } @else if (error()) {
+        <li class="hint error">{{ error() }}</li>
+      } @else {
+        @for (city of results(); track city.id) {
+          <li role="option">
+            <button type="button" (mousedown)="select(city)">
+              <strong>{{ city.name }}</strong>
+              <span>{{ city.admin1 ? city.admin1 + ', ' : '' }}{{ city.country }}</span>
+            </button>
+          </li>
+        } @empty {
+          <li class="hint">Inga städer hittades</li>
+        }
+      }
+    </ul>
+  }
+</div>

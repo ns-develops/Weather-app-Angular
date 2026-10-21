@@ -1,0 +1,33 @@
+<div class="layout">
+  <header class="top">
+    <h1>⛅ Vädret</h1>
+    <app-city-search (citySelected)="selectCity($event)" />
+  </header>
+
+  <main>
+    <div class="weather">
+      @let s = state();
+      @if (s.status === 'loading') {
+        <div class="status">Hämtar väder…</div>
+      } @else if (s.status === 'error') {
+        <div class="status error">
+          <p>{{ s.message }}</p>
+          <button type="button" (click)="retry()">Försök igen</button>
+        </div>
+      } @else {
+        <app-current-weather
+          [data]="s.data"
+          [isFavorite]="isFavorite()"
+          (toggleFavorite)="favorites.toggle(selectedCity())"
+        />
+        <app-forecast [days]="s.data.daily" />
+      }
+    </div>
+
+    <aside>
+      <app-favorites [selectedId]="selectedCity().id" (citySelected)="selectCity($event)" />
+    </aside>
+  </main>
+
+  <footer>Väderdata från <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a></footer>
+</div>

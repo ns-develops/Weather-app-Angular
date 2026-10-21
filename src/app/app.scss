@@ -1,0 +1,73 @@
+.layout {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+
+  app-city-search {
+    flex: 1;
+    min-width: 240px;
+  }
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 1.25rem;
+  align-items: start;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.status {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+
+  &.error {
+    color: var(--danger);
+  }
+
+  button {
+    padding: 0.6rem 1.2rem;
+    border: 0;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+
+  a {
+    color: inherit;
+  }
+}

@@ -1,0 +1,63 @@
+@let w = data();
+@let c = w.current;
+@let today = w.daily[0];
+
+<section class="card">
+  <header>
+    <div>
+      <h2>{{ w.city.name }}</h2>
+      <p class="place">{{ w.city.admin1 ? w.city.admin1 + ', ' : '' }}{{ w.city.country }}</p>
+    </div>
+    <button
+      type="button"
+      class="fav"
+      [class.active]="isFavorite()"
+      [attr.aria-label]="isFavorite() ? 'Ta bort från favoriter' : 'Lägg till som favorit'"
+      [title]="isFavorite() ? 'Ta bort från favoriter' : 'Lägg till som favorit'"
+      (click)="toggleFavorite.emit()"
+    >
+      {{ isFavorite() ? '★' : '☆' }}
+    </button>
+  </header>
+
+  <div class="main">
+    <span class="icon">{{ weatherIcon(c.weatherCode, c.isDay) }}</span>
+    <div>
+      <div class="temp">{{ c.temperature | number: '1.0-0' }}°</div>
+      <div class="desc">{{ weatherText(c.weatherCode) }}</div>
+      <div class="muted">
+        Känns som {{ c.apparentTemperature | number: '1.0-0' }}° ·
+        H {{ today.tempMax | number: '1.0-0' }}° L {{ today.tempMin | number: '1.0-0' }}°
+      </div>
+    </div>
+  </div>
+
+  <dl class="details">
+    <div>
+      <dt>Luftfuktighet</dt>
+      <dd>{{ c.humidity }} %</dd>
+    </div>
+    <div>
+      <dt>Vind</dt>
+      <dd>{{ c.windSpeed | number: '1.0-1' }} m/s {{ windDirection(c.windDirection) }}</dd>
+    </div>
+    <div>
+      <dt>Lufttryck</dt>
+      <dd>{{ c.pressure | number: '1.0-0' }} hPa</dd>
+    </div>
+    <div>
+      <dt>Nederbörd</dt>
+      <dd>{{ c.precipitation | number: '1.0-1' }} mm</dd>
+    </div>
+    <div>
+      <dt>Soluppgång</dt>
+      <dd>{{ today.sunrise | date: 'HH:mm' }}</dd>
+    </div>
+    <div>
+      <dt>Solnedgång</dt>
+      <dd>{{ today.sunset | date: 'HH:mm' }}</dd>
+    </div>
+  </dl>
+
+  <p class="updated">Uppdaterad {{ c.time | date: 'HH:mm' }} lokal tid</p>
+</section>

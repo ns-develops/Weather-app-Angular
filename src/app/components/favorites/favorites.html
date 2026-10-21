@@ -1,0 +1,26 @@
+<section>
+  <h3>Favoriter</h3>
+  @if (favorites.count() === 0) {
+    <p class="empty">Inga favoriter än. Tryck på ☆ för att spara en stad.</p>
+  } @else {
+    <ul>
+      @for (city of favorites.favorites(); track city.id) {
+        <li [class.active]="city.id === selectedId()">
+          <button type="button" class="city" (click)="citySelected.emit(city)">
+            {{ city.name }}
+            <small>{{ city.country }}</small>
+          </button>
+          <button
+            type="button"
+            class="remove"
+            [attr.aria-label]="'Ta bort ' + city.name"
+            title="Ta bort"
+            (click)="favorites.remove(city)"
+          >
+            ×
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</section>
